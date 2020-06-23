@@ -1,12 +1,11 @@
 use rayon::prelude::*;
-use std::error::Error;
 use std::fs;
 use std::time::Instant;
 use uuid::Uuid;
 
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() {
     if fs::metadata("uuids.txt").is_ok() {
-        fs::remove_file("uuids.txt")?;
+        fs::remove_file("uuids.txt").unwrap();
     }
     let start = Instant::now();
     let res = (0..10_000_000)
@@ -15,10 +14,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         .collect::<Vec<String>>()
         .join("\n");
 
-    fs::write("uuids.txt", res)?;
+    fs::write("uuids.txt", res).unwrap();
 
     let duration = start.elapsed();
 
     println!("Time elapsed: {:?}", duration);
-    Ok(())
 }
