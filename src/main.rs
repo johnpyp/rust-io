@@ -5,6 +5,9 @@ use std::time::Instant;
 use uuid::Uuid;
 
 fn main() -> Result<(), Box<dyn Error>> {
+    if fs::metadata("uuids.txt").is_ok() {
+        fs::remove_file("uuids.txt")?;
+    }
     let start = Instant::now();
     let res = (0..10_000_000)
         .into_par_iter()
